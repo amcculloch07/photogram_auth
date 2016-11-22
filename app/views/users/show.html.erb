@@ -1,0 +1,109 @@
+<div class="container">
+
+
+    <div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="jumbotron">
+      <h3>
+        <%=current_user.username%>
+      </h3>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <a href="/users/:id"><%=current_user.username%></a>
+          <small>
+            about 13 hours ago
+          </small>
+        </h3>
+      </div>
+
+      <div class="panel-body">
+        <a href="/photos/64">
+          <img src="www.google.com" class="img-responsive">
+        </a>
+
+        <p>
+            <form action="/create_like" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="hA50B1Gwl7p4RLbINMJFosMaj/h34qxj26SLWxQ3SPNi+DR+haubsi1Xv8HFN+UmT72QZxKeUY+Si+w+Rk7wvQ==">
+
+              <input type="hidden" name="photo_id" value="64">
+
+              <input type="hidden" name="user_id" value="1">
+
+              <button class="btn btn-link">
+                <i class="fa fa-heart-o"></i>
+              </button>
+
+              <small class="text-muted">be the first to like this</small>
+            </form>
+        </p>
+
+        <ul class="media-list">
+
+          <li class="media">
+            <div class="media-body">
+              <h6 class="media-heading">
+                <a href="/users/53"><%=current_user.username%></a>
+                <small>
+                  about 13 hours ago
+                </small>
+              </h6>
+              test
+            </div>
+          </li>
+
+          <li class="media">
+            <div class="media-body">
+              <h6 class="media-heading">
+                <a href="/users/53">zora</a>
+                <small>
+                  about 12 hours ago
+                </small>
+              </h6>
+              test
+            </div>
+          </li>
+
+          <li class="media">
+            <div class="media-body">
+              <form action="/create_comment" method="post">
+                <!-- Hidden input for authenticity token to protect from forgery -->
+                <input name="authenticity_token" type="hidden" value="e2AA+uXaoCR/soHOK+JiwARlv+W72eIqLRUCpH9Rvh2dlkCDMcGsLCqhiMfaF8JEiMKget6lH8ZkOmXBLSgGUw==">
+
+                <input type="hidden" name="photo_id" value="64">
+
+                <input type="hidden" name="user_id" value="1">
+
+                <!-- Label and input for body -->
+                <div class="form-group">
+                  <label for="body" class="sr-only">
+                    Body
+                  </label>
+
+                  <input type="text" id="body" name="body" placeholder="Add a comment..." class="form-control" required>
+                </div>
+              </form>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <hr>
+      </div>
+    </div>
+  </div>
