@@ -9,23 +9,22 @@
       <dd><%= @photo.caption %></dd>
 
       <dt>Image</dt>
-      <dd><%= @photo.image %></dd>
+      <dd><img src="<%= @photo.image %>" width="200"></dd>
 
       <dt>User</dt>
-      <dd><%= @photo.user_id %></dd>
+      <dd><%= @photo.id %></dd>
 
     </dl>
 
+    <div class="row">
+  <div class="col-md-8 col-md-offset-2">
+
     <div class="btn-group btn-group-justified">
       <a href="/photos" class="btn btn-primary">
-        Back
-      </a>
-      <a href="/photos/<%= @photo.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_photo/<%= @photo.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
+        <i class="fa fa-chevron-left"></i>
       </a>
     </div>
+  </div>
+</div>
   </div>
 </div>

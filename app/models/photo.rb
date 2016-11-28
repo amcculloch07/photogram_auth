@@ -7,4 +7,5 @@ class Photo < ActiveRecord::Base
   has_many :fans, :through => :likes, :source => :user
 
   belongs_to :user
+  
 end
