@@ -18,55 +18,118 @@
   </div>
 </div> -->
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <a href="/photos/new" class="btn btn-default btn-block">
             <i class="fa fa-plus"></i>
           </a>
           <hr>
         </div>
+      </div> -->
+
+      <div class="page-header">
+      <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+          <a href="/photos/new" class="btn btn-default btn-block"> <i class="fa fa-plus"></i> </a>
+      </div>
+      </div>
       </div>
 
-
       <% @photos.each do |photo| %>
-
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                <a href="/users/<%= photo.user_id %>">ig</a>
+                <a href="/users/<%= photo.user.id %>" > <%= photo.user.username %> </a>
                 <small>
-                  about 1 hour ago
+                  <%= time_ago_in_words(photo.created_at) %> ago
                 </small>
               </h3>
             </div>
 
-      <div class="panel-body">
-        <a href="/photos/<%= photo.id %>">
-          <img src="<%= photo.image %>" class="img-responsive">
-        </a>
-      </div>
 
-   <% end %>
+              <div class="panel-body">
+                <a href="/photos/<%= photo.id %>" > <img src="<%= photo.image %>" class="img-responsive" > </a>
+                  <% usernames = [] %>
+                  <% photo.likes.each do |like| %>
+                    <% usernames.push(like.user.username) %>
+                  <% end %>
+
+                <% like = photo.likes.find_by({ :user_id => current_user.id }) %>
+                <% if like.present? %>
+                <a href="/delete_like/<%= like.id %>" class="btn btn-link">
+                  <i class="fa fa-heart"></i>
+                </a>
+                <% if usernames.count > 1 %>
+                  <%= usernames.to_sentence %> like this
+                  <% elsif usernames.count==1 %>
+                  <%= usernames.to_sentence %> likes this
+                  <% end %>
+                <% else %>
+        <!-- New Form for Like Code-->
+                <form action="/create_like" method="post">
+                <!-- Hidden input for authenticity token to protect from forgery -->
+                  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+                  <!-- Label and input for user_id -->
+                    <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+
+                  <!-- Label and input for photo_id -->
+                    <input type="hidden" id="photo_id" name="photo_id" placeholder="Photo" class="form-control" value="<%= photo.id %>">
+
+                  <button class="btn btn-link">
+                    <i class="fa fa-heart-o"> </i>
+                  </button>
+                  <% if usernames.count > 1 %>
+                  <%= usernames.to_sentence %> like this
+                  <% elsif usernames.count==1 %>
+                  <%= usernames.to_sentence %> likes this
+                  <% end %>
+                </form>
+        <!-- End New Form for Like Code-->
+                <% end %>
 
 
+                <ul class="media-list">
+                  <% photo.comments.each do |comment| %>
+                  <li class="media">
+                    <div class="media-body">
+                      <h6 class="media-heading"> <a href="users/<%= photo.user.id %>"> <%= comment.user.username %> </a> <small class="text-muted"> <%= time_ago_in_words(comment.created_at) %> ago </small> </h6>
+                      <%= comment.body %>
+                    </div>
+                  </li>
+                  <% end %>
 
+        <!-- New Form Code-->
+                  <li class="media">
+                    <div class="media-body">
+                      <form action="/create_comment" method="post">
+                        <!-- Hidden input for authenticity token to protect from forgery -->
+                        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
+                        <!-- Label and input for photo_id -->
+                        <div class="form-group">
+                          <input type="hidden" id="photo_id" name="photo_id" placeholder="Photo" class="form-control" value="<%= photo.id %>">
+                        </div>
 
+                        <!-- Label and input for body -->
+                        <div class="form-group">
+                          <input type="text" id="body" name="body" placeholder="Add a comment..." class="form-control">
+                        </div>
 
-    <% @photos.each do |photo| %>
-      <tr>
-        <td><%= photo.caption %></td>
-        <td><img src="<%= photo.image %>"</td>
-        <td><%= photo.user_id %></td>
-        <td>
-          <a href="/photos/<%= photo.id %>" class="btn btn-primary">Show</a>
-          <a href="/photos/<%= photo.id %>/edit" class="btn btn-warning">Edit</a>
-          <a href="/delete_photo/<%= photo.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
+                        <!-- Label and input for user_id -->
+                        <div class="form-group">
+                          <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+                        </div>
+                      </form>
+                    </div>
+                  </li>
+
+        <!-- End of New Form HTML-->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>

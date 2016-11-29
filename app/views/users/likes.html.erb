@@ -1,19 +1,6 @@
 <div class="page-header">
-  <div class="row">
-    <div class="col-sm-offset-2 col-sm-8">
-      <div class="jumbotron">
-        <h3> <%= @user.username %></h3>
-      </div>
-    </div>
-  </div>
-<div class="row">
-  <div class="col-sm-offset-2 col-sm-8">
-    <a href="/photos/new" class="btn btn-default btn-block"> <i class="fa fa-plus"></i> </a>
-</div>
-</div>
-</div>
 
-<% @user.photos.each do |photo| %>
+<% @likes.each do |photo| %>
 <div class="row">
   <div class="col-sm-offset-2 col-sm-8">
     <div class="panel panel-default">
@@ -35,7 +22,7 @@
         </a>
         <% if usernames.count > 1 %>
           <%= usernames.to_sentence %> like this
-          <% elsif usernames.count==1 %>
+          <% elsif usernames.count == 1 %>
           <%= usernames.to_sentence %> likes this
           <% end %>
         <% else %>

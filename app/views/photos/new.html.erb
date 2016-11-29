@@ -1,3 +1,4 @@
+<div class="page-header">
 <!-- Validation failure messages -->
 <% if @photo.errors.any? %>
   <% @photo.errors.full_messages.each do |message| %>
@@ -8,48 +9,61 @@
   <% end %>
 <% end %>
 
-<div class="page-header">
-  <h3>Add Photo</h3>
-</div>
+<div class="panel panel-default">
+     <div class="panel-heading">
+       <h3 class="panel-title">
+         Add Photo
+       </h3>
+     </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <form action="/create_photo" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+     <div class="panel-body">
+             <form action="/create_photo" method="post">
+               <!-- Hidden input for authenticity token to protect from forgery -->
+               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+               <div class="form-group">
+                 <label for="caption" class="control-label">
+                   Caption
+                 </label>
 
-      <!-- Label and input for caption -->
-      <div class="form-group">
-        <label for="caption" class="control-label">
-          Caption
-        </label>
+               <input id="caption" name="caption" placeholder="Add a caption..." class="form-control" value="<%= @photo.caption %>">
+              </div>
 
-        <textarea id="caption" name="caption" placeholder="Caption" class="form-control" rows="3"><%= @photo.caption %></textarea>
-      </div>
+
+
+        <!-- <textarea id="caption" name="caption" placeholder="Caption" class="form-control" rows="3"><%= @photo.caption %></textarea>
+      </div> -->
 
       <!-- Label and input for image -->
-      <div class="form-group">
-        <label for="image" class="control-label">
-          Image
-        </label>
+                <div class="form-group">
+                  <label for="image" class="control-label">
+                    Image
+                  </label>
 
-        <input type="text" id="image" name="image" placeholder="Image" class="form-control" value="<%= @photo.image %>">
+                  <input type="text" id="image" name="image" placeholder="Add a URL..." class="form-control" value="<%= @photo.image %>">
+                </div>
+
+                <input type="hidden" id="user_id" name="user_id" value="<%= current_user.id %>">
+
+                <div class="form-group">
+                  <button class="btn btn-success btn-block">
+                    Create Photo
+                  </button>
+                </div>
+
+                <div class="form-group">
+                  <a href="/photos" class="btn btn-link btn-block">
+                    Cancel
+                  </a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Label and input for user_id -->
-      <div class="form-group">
-        <!-- <label for="user_id" class="control-label">
-          User
-        </label> -->
 
-        <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user %>">
-      </div>
-
-      <button class="btn btn-success">
-        Create Photo
-      </button>
-      or
-      <a href="/photos">Cancel</a>
-    </form>
-  </div>
-</div>
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <hr>
+            </div>
+          </div>
